@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock-Paper-Scissors</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.3/socket.io.js"></script>
+</head>
+<body>
+    <h1>Rock-Paper-Scissors</h1>
+    <p>Welcome, {{ username }}! You are in room: {{ room }}</p>
+    <div>
+        <button onclick="play('rock')">Rock</button>
+        <button onclick="play('paper')">Paper</button>
+        <button onclick="play('scissors')">Scissors</button>
+    </div>
+    <div id="result"></div>
+
+    <script>
+        const socket = io();
+        const username = "{{ username }}";
+        const room = "{{ room }}";
+
+        socket.emit('join', {username: username, room: room});
+
+        function play(move) {
+            socket.emit('play', {username: username, move: move, room: room});
+        }
+
+        socket.on('message', function(data) {
+            console.log(data.msg);
+        });
+
+        socket.on('play', function(data) {
+            console.log(`${data.username} played ${data.move}`);
+        });
+
+        socket.on('result', function(data) {
+            const resultText = `${data.player1} played ${data.move1}, ${data.player2} played ${data.move2}. Result: ${data.result}`;
+            document.getElementById('result').innerText = resultText;
+        });
+    </script>
+</body>
+</html>

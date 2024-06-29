@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock-Paper-Scissors</title>
+</head>
+<body>
+    <h1>Join a Room</h1>
+    <form action="{{ url_for('main.room') }}" method="post">
+        <input type="text" name="username" placeholder="Enter your name" required>
+        <input type="text" name="room" placeholder="Enter room name" required>
+        <button type="submit">Join Room</button>
+    </form>
+</body>
+</html>
