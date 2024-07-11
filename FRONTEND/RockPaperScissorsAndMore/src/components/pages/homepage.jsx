@@ -6,6 +6,7 @@ function HomePage() {
 
   let [newGame, setNewGame] = useState(false)
   let [newGameDivClass, setNewGameDivClass] = useState("game-start-container new-game-div div-visible-no")
+  let [nick, setNick] = useState("Twój nick...")
 
   let [gameCode, setGameCode] = useState("01234567");
 
@@ -24,6 +25,10 @@ function HomePage() {
     }else {
       setNewGameDivClass("game-start-container new-game-div div-visible-no");
     }
+  }
+
+  const handleNickChange = (event) => {
+      setNick(event.target.value)
   }
 
     return (
@@ -48,6 +53,7 @@ function HomePage() {
               <img src="../../public/logo.jpg"/>
             </Link>
             <div className="game-settings">
+              <input type="text" placeholder={nick} onChange={handleNickChange} value={nick}/>
               <button onClick={createNewGame}>Stwórz Grę</button>
               <input type="text" id="kod-gry" placeholder='Kod pokoju...'/>
               <button>Dołącz do gry</button>
@@ -57,7 +63,7 @@ function HomePage() {
           <div className={newGameDivClass} >
             <h1>Przydzielony kod gry:</h1>
             <h1>{gameCode}</h1>
-            <input type="text" placeholder='Podaj nick...'/>
+            <input type="text" placeholder={nick} onChange={handleNickChange} value={nick}/>
             <input type="text" placeholder='Nick Drugiego Gracza...' className='secondPlayerNick' disabled/>
             <button>Zacznij grę</button>
           </div>

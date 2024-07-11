@@ -1,11 +1,3 @@
-.container {
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .game-start-container{
     border: 3px solid rgba(246, 246, 246, 0.833);
     border-radius: 15px;
@@ -121,10 +113,3 @@ secondPlayerNick::placeholder {
     margin-top: 20px;
 }
 
-.div-visible-flex {
-    display: flex;
-}
-
-.div-visible-no {
-    display: none;
-}

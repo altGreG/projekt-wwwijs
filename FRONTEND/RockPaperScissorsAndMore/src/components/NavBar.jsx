@@ -18,6 +18,11 @@ function NavBar() {
                         Credits
                     </li>
                 </Link>
+                <Link to="/game-rules">
+                    <li className="nav-list-item">
+                        Game Rules
+                    </li>
+                </Link>
             </ul>
         </nav>
       </>

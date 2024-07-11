@@ -12,7 +12,10 @@ function App() {
     {/* Trzeba naprawić routing */}
       <Router>
         <NavBar />
-        <HomePage/>
+        {/* <HomePage/> */}
+
+        <GamePage />
+
         <Routes>
           <Route path='/' exact component={HomePage}/>
           <Route path='/game' exact component={GamePage}/>
