@@ -10,21 +10,6 @@
     justify-content: space-between;
 }
 
-.game-rules-div {
-    justify-self: flex-start;
-    justify-content: start;
-    /* display: none; */
-}
-
-.game-rules-div ol {
-    margin-top: 20px;
-}
-
-.game-rules-div img {
-    margin-top: 20px;
-    height: 300px !important;
-}
-
 .game-start-container:first-child {
     margin-right: 30px;
 }
@@ -53,7 +38,7 @@
 .game-settings {
     height: 300px;
     width: 100%;
-    border: 2px solid rgba(246, 246, 246, 0.833);
+    /* border: 2px solid rgba(246, 246, 246, 0.833); */
     display: flex;
     flex-direction: column;
     align-items: center;

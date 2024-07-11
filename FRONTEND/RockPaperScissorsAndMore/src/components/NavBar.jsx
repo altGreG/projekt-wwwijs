@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import "../App.css";
 
-function NavBar() {
+function NavBar({showGameRules}) {
 
     return (
       <>
@@ -18,11 +18,12 @@ function NavBar() {
                         Credits
                     </li>
                 </Link>
-                <Link to="/game-rules">
-                    <li className="nav-list-item">
+                <Link>
+                    <li className="nav-list-item" onClick={showGameRules}>
                         Game Rules
                     </li>
                 </Link>
+                    
             </ul>
         </nav>
       </>

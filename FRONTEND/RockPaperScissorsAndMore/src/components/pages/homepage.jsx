@@ -34,19 +34,6 @@ function HomePage() {
     return (
       <>
         <div className="container">
-          
-          <div className="game-start-container game-rules-div">
-            <h1>Zasady gry</h1>
-            <ol className='game-rules-list'>
-              <li className='game-rules-list-item'>LoerewrfewfasfasdfSDAFASDFASDF</li>
-              <li className='game-rules-list-item'>LoerewrfewfasfasdfSDAFASDFASDF</li>
-              <li className='game-rules-list-item'>LoerewrfewfasfasdfSDAFASDFASDF</li>
-              <li className='game-rules-list-item'>LoerewrfewfasfasdfSDAFASDFASDF</li>
-              <li className='game-rules-list-item'>LoerewrfewfasfasdfSDAFASDFASDF</li>
-              <li className='game-rules-list-item'>LoerewrfewfasfasdfSDAFASDFASDF</li>
-            </ol>
-            <img src="../../public/moves.jpg" />
-          </div>
 
           <div className="game-start-container">
             <Link to="/" className='homepage-logo'>

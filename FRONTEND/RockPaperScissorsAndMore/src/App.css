@@ -24,16 +24,18 @@
 
 
 .div-visible-flex {
-  display: flex;
+  display: flex !important;
 }
 
 .div-visible-no {
-  display: none;
+  display: none !important;
 }
 
 /* NavBar */
 
 .nav {
+  position: fixed;
+  top: 0px;
   width: 100%;
   height: 50px;
   display: flex;
