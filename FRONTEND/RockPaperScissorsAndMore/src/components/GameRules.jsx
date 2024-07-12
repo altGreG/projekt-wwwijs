@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import React, {useState} from 'react'
 import "./GameRules.css";
 
-function GameRules({isActive}) {
+function GameRules({isActive, closeGameRules}) {
 
 
     let gameRulesStyle = ""
@@ -16,7 +16,7 @@ function GameRules({isActive}) {
     return (
       <>
         <div className={gameRulesStyle}>
-          {/* <span className='close-game-rules'>Zamknij</span> */}
+          <span className='close-game-rules' onClick={closeGameRules}>Zamknij</span>
           <div className="game-rules-page">
           <h1>Zasady gry</h1>
           <ol className='game-rules-list'>

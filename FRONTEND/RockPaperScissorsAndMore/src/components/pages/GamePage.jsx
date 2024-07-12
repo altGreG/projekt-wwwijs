@@ -35,22 +35,6 @@ function GamePage() {
             <h2>Historia Gry</h2>
           </div>
             <div className="moves-picker">
-
-              {/* <div className="move">
-                  <label htmlFor="fire">
-                    <img src="../../public/moves/fire.png" />
-                  </label>
-                  <span>Fire</span> 
-                  <input type="radio" name="move" onChange={handleMovePick} id="fire" />
-                </div> */}
-
-                {/* <div className="move">
-                  <label htmlFor="water">
-                    <img src="../../public/moves/water.png" />
-                  </label>
-                  <span>Water</span> 
-                  <input type="radio" name="move" onChange={handleMovePick} id="water" />
-                </div> */}
               {possibleMoves.map((move) => {
                 return <div className="move">
                   <label htmlFor={move}>
