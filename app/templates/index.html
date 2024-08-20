@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rock-Paper-Scissors</title>
+    <title>Select Room</title>
 </head>
 <body>
-    <h1>Join a Room</h1>
-    <form action="{{ url_for('main.room') }}" method="post">
-        <input type="text" name="username" placeholder="Enter your name" required>
-        <input type="text" name="room" placeholder="Enter room name" required>
+    <h1>Select a Room</h1>
+    <form action="/room" method="POST">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        <label for="room">Room:</label>
+        <input type="text" id="room" name="room" required>
         <button type="submit">Join Room</button>
     </form>
 </body>

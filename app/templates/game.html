@@ -14,7 +14,11 @@
         <button onclick="play('paper')">Paper</button>
         <button onclick="play('scissors')">Scissors</button>
     </div>
-    <div id="result"></div>
+    <div id="result">
+        <p id="player1"></p>
+        <p id="player2"></p>
+        <p id="gameResult"></p>
+    </div>
 
     <script>
         const socket = io();
@@ -31,13 +35,14 @@
             console.log(data.msg);
         });
 
-        socket.on('play', function(data) {
-            console.log(`${data.username} played ${data.move}`);
-        });
-
         socket.on('result', function(data) {
-            const resultText = `${data.player1} played ${data.move1}, ${data.player2} played ${data.move2}. Result: ${data.result}`;
-            document.getElementById('result').innerText = resultText;
+            const player1Text = `${data.player1} played ${data.move1}`;
+            const player2Text = `${data.player2} played ${data.move2}`;
+            const resultText = `Result: ${data.result}`;
+
+            document.getElementById('player1').innerText = player1Text;
+            document.getElementById('player2').innerText = player2Text;
+            document.getElementById('gameResult').innerText = resultText;
         });
     </script>
 </body>

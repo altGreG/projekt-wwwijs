@@ -1,16 +1,14 @@
 from flask import Flask
 from flask_socketio import SocketIO
 
-socketio = SocketIO()
+socketio = SocketIO(logger=True, engineio_logger=True)
 
 def create_app():
     app = Flask(__name__)
-    app.config.from_object('config.Config')
+    app.config['SECRET_KEY'] = 'secret!'
 
-    with app.app_context():
-        from . import routes, socketio as sio
-        app.register_blueprint(routes.bp)
+    from app.routes import bp as main_bp
+    app.register_blueprint(main_bp)
 
-        socketio.init_app(app)
-
+    socketio.init_app(app)
     return app
