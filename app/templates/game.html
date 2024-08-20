@@ -31,19 +31,25 @@
             socket.emit('play', {username: username, move: move, room: room});
         }
 
-        socket.on('message', function(data) {
-            console.log(data.msg);
-        });
-
         socket.on('result', function(data) {
+            console.log(data);  // Logowanie
             const player1Text = `${data.player1} played ${data.move1}`;
             const player2Text = `${data.player2} played ${data.move2}`;
-            const resultText = `Result: ${data.result}`;
+
+            let resultText;
+            if (data.result === 'Draw') {
+                resultText = 'Result: Draw';
+            } else if (data.result === 'Player 1 wins') {
+                resultText = `Result: ${data.player1} wins`;
+            } else if (data.result === 'Player 2 wins') {
+                resultText = `Result: ${data.player2} wins`;
+            }
 
             document.getElementById('player1').innerText = player1Text;
             document.getElementById('player2').innerText = player2Text;
             document.getElementById('gameResult').innerText = resultText;
         });
+
     </script>
 </body>
 </html>
