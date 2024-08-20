@@ -3,16 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rock-Paper-Scissors</title>
+    <title>Rock-Paper-Scissors-Lizard-Spock... and more!</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.3/socket.io.js"></script>
 </head>
 <body>
-    <h1>Rock-Paper-Scissors</h1>
+    <h1>Rock-Paper-Scissors-Lizard-Spock... and more!</h1>
     <p>Welcome, {{ username }}! You are in room: {{ room }}</p>
     <div>
+        <!-- Dodaj przyciski dla wszystkich 15 wyborów -->
         <button onclick="play('rock')">Rock</button>
-        <button onclick="play('paper')">Paper</button>
+        <button onclick="play('fire')">Fire</button>
         <button onclick="play('scissors')">Scissors</button>
+        <button onclick="play('snake')">Snake</button>
+        <button onclick="play('human')">Human</button>
+        <button onclick="play('tree')">Tree</button>
+        <button onclick="play('wolf')">Wolf</button>
+        <button onclick="play('sponge')">Sponge</button>
+        <button onclick="play('paper')">Paper</button>
+        <button onclick="play('air')">Air</button>
+        <button onclick="play('water')">Water</button>
+        <button onclick="play('dragon')">Dragon</button>
+        <button onclick="play('devil')">Devil</button>
+        <button onclick="play('lightning')">Lightning</button>
+        <button onclick="play('gun')">Gun</button>
     </div>
     <div id="result">
         <p id="player1"></p>
@@ -30,6 +43,14 @@
         function play(move) {
             socket.emit('play', {username: username, move: move, room: room});
         }
+
+        socket.on('message', function(data) {
+            console.log(data.msg);
+        });
+
+        socket.on('play', function(data) {
+            console.log(`${data.username} played ${data.move}`);
+        });
 
         socket.on('result', function(data) {
             console.log(data);  // Logowanie
@@ -49,7 +70,6 @@
             document.getElementById('player2').innerText = player2Text;
             document.getElementById('gameResult').innerText = resultText;
         });
-
     </script>
 </body>
 </html>

@@ -4,17 +4,37 @@ from . import socketio
 
 bp = Blueprint('main', __name__)
 
+# Lista możliwych wyborów
+CHOICES = [
+    "rock", "fire", "scissors", "snake", "human", "tree", "wolf", "sponge", 
+    "paper", "air", "water", "dragon", "devil", "lightning", "gun"
+]
+
+# Definicje wyników (kto wygrywa z kim)
+WINNING_RELATIONS = {
+    "rock": ["scissors", "snake", "human", "tree", "wolf", "sponge"],
+    "fire": ["scissors", "paper", "snake", "human", "tree", "wolf"],
+    "scissors": ["paper", "snake", "human", "tree", "wolf", "sponge"],
+    "snake": ["human", "tree", "wolf", "sponge", "paper", "water"],
+    "human": ["tree", "wolf", "sponge", "paper", "air", "water"],
+    "tree": ["wolf", "sponge", "paper", "air", "water", "dragon"],
+    "wolf": ["sponge", "paper", "air", "water", "dragon", "devil"],
+    "sponge": ["paper", "air", "water", "dragon", "devil", "lightning"],
+    "paper": ["air", "water", "dragon", "devil", "lightning", "gun"],
+    "air": ["water", "dragon", "devil", "lightning", "gun", "rock"],
+    "water": ["dragon", "devil", "lightning", "gun", "rock", "fire"],
+    "dragon": ["devil", "lightning", "gun", "rock", "fire", "scissors"],
+    "devil": ["lightning", "gun", "rock", "fire", "scissors", "snake"],
+    "lightning": ["gun", "rock", "fire", "scissors", "snake", "human"],
+    "gun": ["rock", "fire", "scissors", "snake", "human", "tree"]
+}
+
 rooms = {}
 
 def determine_winner(player1_choice, player2_choice):
-    outcomes = {
-        'rock': 'scissors',
-        'scissors': 'paper',
-        'paper': 'rock'
-    }
     if player1_choice == player2_choice:
         return 'Draw'
-    elif outcomes[player1_choice] == player2_choice:
+    elif player2_choice in WINNING_RELATIONS[player1_choice]:
         return 'Player 1 wins'
     else:
         return 'Player 2 wins'
