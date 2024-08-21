@@ -40,32 +40,63 @@ def on_play(data):
     room = data['room']
     player_move = data['move']
     
-    if room in rooms and username in rooms[room]:
-        rooms[room][username] = player_move  # Zapisanie ruchu gracza
+    if room in rooms and username in rooms[room]["players"]:
+        rooms[room]["players"][username] = player_move
         
-        # Logowanie ruchu gracza
-        print(f'Player {username} in room {room} played {player_move}')
-        
-        # Sprawdzanie, czy obaj gracze wykonali ruch
-        if len(rooms[room]) == 2 and all(move is not None for move in rooms[room].values()):
-            players = list(rooms[room].keys())
-            moves = list(rooms[room].values())
-            result = determine_winner(moves[0], moves[1])
-            
-            # Logowanie wyniku gry
-            print(f'Result: {players[0]} played {moves[0]}, {players[1]} played {moves[1]} - {result}')
-            
-            # Wysłanie wyniku do obu graczy w pokoju
+        # Sprawdź, czy oba ruchy są gotowe
+        if len(rooms[room]["players"]) == 2 and all(move is not None for move in rooms[room]["players"].values()):
+            players = list(rooms[room]["players"].keys())
+            moves = list(rooms[room]["players"].values())
+            result_text, winner = determine_winner(players[0], moves[0], players[1], moves[1])
+
+            # Aktualizacja wyników
+            if winner == players[0]:
+                rooms[room]["scores"][players[0]] += 1
+            elif winner == players[1]:
+                rooms[room]["scores"][players[1]] += 1
+
+            # Emitowanie bieżących wyników
             emit('result', {
-                'player1': players[0], 
-                'move1': moves[0], 
-                'player2': players[1], 
-                'move2': moves[1], 
-                'result': result
+                'player1': players[0],
+                'move1': moves[0],
+                'player2': players[1],
+                'move2': moves[1],
+                'result': result_text,
+                'score1': rooms[room]["scores"][players[0]],
+                'score2': rooms[room]["scores"][players[1]],
+                'game_over': False
             }, room=room)
-            
-            # Resetowanie ruchów w pokoju po zakończeniu gry
-            rooms[room] = {player: None for player in rooms[room]}
+
+            # Sprawdzenie, czy któryś z graczy wygrał
+            if rooms[room]["scores"][players[0]] == 3:
+                final_result = f'{players[0]} wins the game!'
+                emit('result', {
+                    'player1': players[0],
+                    'move1': moves[0],
+                    'player2': players[1],
+                    'move2': moves[1],
+                    'result': final_result,
+                    'score1': rooms[room]["scores"][players[0]],
+                    'score2': rooms[room]["scores"][players[1]],
+                    'game_over': True
+                }, room=room)
+                reset_room(room)
+            elif rooms[room]["scores"][players[1]] == 3:
+                final_result = f'{players[1]} wins the game!'
+                emit('result', {
+                    'player1': players[0],
+                    'move1': moves[0],
+                    'player2': players[1],
+                    'move2': moves[1],
+                    'result': final_result,
+                    'score1': rooms[room]["scores"][players[0]],
+                    'score2': rooms[room]["scores"][players[1]],
+                    'game_over': True
+                }, room=room)
+                reset_room(room)
+            else:
+                # Reset ruchów dla kolejnej rundy
+                rooms[room]["players"] = {player: None for player in rooms[room]["players"]}
     else:
         emit('message', {'msg': 'Unrecognized player or room.'})
 

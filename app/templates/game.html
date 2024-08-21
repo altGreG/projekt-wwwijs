@@ -31,6 +31,8 @@
         <p id="player1"></p>
         <p id="player2"></p>
         <p id="gameResult"></p>
+        <p id="score"></p> <!-- Nowe pole do wyświetlania bieżących punktów -->
+        <p id="finalResult"></p> <!-- Pole do wyświetlania końcowego wyniku -->
     </div>
 
     <script>
@@ -56,19 +58,19 @@
             console.log(data);  // Logowanie
             const player1Text = `${data.player1} played ${data.move1}`;
             const player2Text = `${data.player2} played ${data.move2}`;
-
-            let resultText;
-            if (data.result === 'Draw') {
-                resultText = 'Result: Draw';
-            } else if (data.result === 'Player 1 wins') {
-                resultText = `Result: ${data.player1} wins`;
-            } else if (data.result === 'Player 2 wins') {
-                resultText = `Result: ${data.player2} wins`;
-            }
+            const resultText = `Round result: ${data.result}`;
+            const scoreText = `Current score: ${data.player1} - ${data.score1}, ${data.player2} - ${data.score2}`;
 
             document.getElementById('player1').innerText = player1Text;
             document.getElementById('player2').innerText = player2Text;
             document.getElementById('gameResult').innerText = resultText;
+            document.getElementById('score').innerText = scoreText;
+
+            if (data.game_over) {
+                document.getElementById('finalResult').innerText = `Final result: ${data.result}`;
+            } else {
+                document.getElementById('finalResult').innerText = '';  // Czyszczenie wyniku końcowego między rundami
+            }
         });
     </script>
 </body>
