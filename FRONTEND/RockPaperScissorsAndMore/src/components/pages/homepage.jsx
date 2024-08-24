@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { json, Link } from 'react-router-dom';
 import "./homepage.css";
 import React, {useState} from 'react'
 
@@ -17,6 +17,25 @@ function HomePage() {
     // otrzymujemy kod i dajemy do zmiennej gameCode
 
     // zmieniamy status newGame na true, pojawia się okno new-game-div
+
+    const httpBody = {
+      username: {nick},
+      room: 'tymczasowe'
+    }
+
+    fetch("http://127.0.0.1:5000/room",
+      {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+
+      },
+      body: JSON.stringify(httpBody)}
+    ).then((response) => 
+      response.json()
+    ).then((json) => console.log(json)
+    ).catch(error => console.error(error))
 
     console.log(newGame)
     

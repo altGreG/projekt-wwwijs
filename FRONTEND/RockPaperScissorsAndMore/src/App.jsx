@@ -22,6 +22,18 @@ function App() {
     setIsAboutActive(!isAboutActive)
   }
 
+  // const socket = new WebSocket("ws://localhost:8080")
+
+  // // connection opened
+  // socket.addEventListener("open", event => {
+  //   socket.send("Connection established")
+  // })
+
+  // // listen for messages
+  // socket.addEventListener("message", event => {
+  //   console.log("Message from server ", event.data)
+  // })
+
   return (
     <>
 
@@ -30,7 +42,7 @@ function App() {
         <NavBar showGameRules={handleCloseGameRules} showAbout={handleCloseAbout}/>
         <GameRules isActive={isGameRulesActive} closeGameRules={handleCloseGameRules}/>
         <About isActive={isAboutActive} closeAbout={handleCloseAbout}/>
-        {/* <HomePage/> */}
+        <HomePage/>
         <GamePage />
         <Routes>
           <Route path='/' exact component={HomePage}/>

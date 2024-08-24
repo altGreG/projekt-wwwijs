@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from flask_socketio import emit, join_room
+from flask import json
 from . import socketio
 
 bp = Blueprint('main', __name__)
@@ -29,6 +30,11 @@ WINNING_RELATIONS = {
     "gun": ["rock", "fire", "scissors", "snake", "human", "tree"]
 }
 
+# TODO: Zrobilić listę gdzie sprawdzamy czy użytkownik już w którymś pokoju może być poprzez liste users, 
+# do której dopisujemy go, gdy gracza przypiszey do numeru pokoju w liście rooms,
+#  ew. można sprawdzać w samym rooms, ale tak będzie łatwiej
+users = []
+
 rooms = {}
 
 def determine_winner(player1_name, player1_choice, player2_name, player2_choice):
@@ -49,10 +55,42 @@ def index():
     return render_template('index.html')
 
 @bp.route('/room', methods=['POST'])
+# def room():
+#     username = request.form['username']
+#     room = request.form['room']
+#     return render_template('room.html', username=username, room=room)
+
+#TODO: Dane przyjmujemy w postaci jsona i w takiej również zwracamy, zwracamy:
+#   - czy utworzono pokój, jeśli nie to dlatego że gracz o tym nicku już jest przypisany
+#   - nick gracza
+#   - numer pokoju, wygenerowany losowo przez serwer lub wpisany przez samego użytkownika, ja bym wolał by serwer przydzielał
 def room():
-    username = request.form['username']
-    room = request.form['room']
-    return render_template('room.html', username=username, room=room)
+    username = request.json['username']
+    room = request.json['room']
+    
+    response = json.jsonify({'roomCreated': 'true',
+                             'username': username,
+                             'room': room})
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    
+
+    # TODO: Jeśli użytkownik nie jest przypisany zwracamy response powyżej, dodajemy go do list users, rooms, wraz 
+    # z wygenerowanym numerem pokoju
+    #  w przeciwnym wypadku roomCreated ma wartość false
+
+    # Trochę napisane ale nie działa, zmienne nie chce odczytać, nie ma generowania
+    # if username not in users {
+    #     users.append()
+    #     return response
+    # }else {
+    #        response = json.jsonify({'roomCreated': 'false',
+    #                        'username': username,
+    #                       'room': room})
+    #     response.headers.add('Access-Control-Allow-Origin', '*')
+    #     return response;
+    # }
+
+    return response
 
 @bp.route('/game/<room>/<username>', methods=['POST'])
 def game(room, username):
