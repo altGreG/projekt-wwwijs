@@ -2,13 +2,17 @@ import { Link } from 'react-router-dom';
 import React, {useState} from 'react'
 import "./GamePage.css";
 
-function GamePage({socket, pnick, eNick, gCode}) {
+function GamePage({socket, pNick, eNick, gCode}) {
 
-  let [playerNick, setPlayerNick] = useState(pnick)
+  // let [playerNick, setPlayerNick] = useState(pNick)
   let [playerScore, setPlayerScore] = useState("0")
-  let [enemyNick, setEnemyNick] = useState(eNick)
+  // let [enemyNick, setEnemyNick] = useState(eNick)
   let [enemyScore, setEnemyScore] = useState("0")
-  let [gameCode, setGameCode] = useState(gCode)
+  // let [gameCode, setGameCode] = useState(gCode)
+
+  let playerNick = pNick;
+  let enemyNick = eNick;
+  let gameCode = gCode;
 
   let [playerMove, setPlayerMove] = useState("nothing")
 
@@ -28,6 +32,7 @@ function GamePage({socket, pnick, eNick, gCode}) {
   }
 
   socket.on('secondPlayer', (data) =>{
+    console.log("Enemy nick: " + data)
     setAttackButtonStyle("attack-btn")
   })
 

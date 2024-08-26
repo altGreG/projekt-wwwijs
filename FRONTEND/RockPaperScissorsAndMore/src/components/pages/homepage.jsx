@@ -81,8 +81,17 @@ function HomePage({socket, sendStartData}) {
       console.log(data)
       setPageVisibility("div-visible-no")
     })
-
     
+  }
+
+  const joinGameByCode = () => {
+    socket.emit('join', {username: nick, room: gameCode});
+
+    socket.on('message', (data) => {
+      console.log(data)
+      setPageVisibility("div-visible-no")
+      sendStartData(nick, enemyNick, gameCode)
+    })
   }
 
     return (
@@ -97,7 +106,7 @@ function HomePage({socket, sendStartData}) {
               <input type="text" className={nickRoomInputsStyle} placeholder={nick} onChange={handleNickChange} value={nick}/>
               <input type="text" className={nickRoomInputsStyle} id="kod-gry" placeholder='Kod pokoju...' onChange={handleGameCodeChange}/>
               <button className={nickRoomInputsStyle} onClick={createNewGame}>Stwórz Grę</button>
-              <button className={nickRoomInputsStyle}>Dołącz do gry</button>
+              <button className={nickRoomInputsStyle} onClick={joinGameByCode}>Dołącz do gry</button>
             </div>
           </div>
 

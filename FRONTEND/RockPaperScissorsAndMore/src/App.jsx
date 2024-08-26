@@ -60,7 +60,7 @@ function App() {
         <GameRules isActive={isGameRulesActive} closeGameRules={handleCloseGameRules}/>
         <About isActive={isAboutActive} closeAbout={handleCloseAbout}/>
         <HomePage socket={socket} sendStartData={handleSendingStartDataToGamePage}/>
-        <GamePage socket={socket} pnick={nick} eNick={enemyNick} gCode={gameCode}/>
+        <GamePage socket={socket} pNick={nick} eNick={enemyNick} gCode={gameCode}/>
         <Routes>
           <Route path='/' exact component={HomePage}/>
           <Route path='/game' exact component={GamePage}/>
