@@ -10,7 +10,7 @@ import { useState } from 'react';
 
 const socket = socketIO.io('http://localhost:9000')
 socket.on('connect', (data) => {
-  console.log("Successfully connected with server!" + data)
+  console.log("Successfully connected with server!")
   socket.emit('connection_info', {data: 'I\'m connected!'});
 })
 

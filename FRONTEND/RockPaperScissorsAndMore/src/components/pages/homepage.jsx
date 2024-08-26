@@ -4,10 +4,10 @@ import React, {useState} from 'react'
 
 function HomePage({socket}) {
 
-  let [newGame, setNewGame] = useState(false)
+  let [newGame, setNewGame] = useState(true)
   let [newGameDivClass, setNewGameDivClass] = useState("game-start-container new-game-div div-visible-no")
-  let [nick, setNick] = useState("Twój nick...")
-  let [enemyNick, setEnemyNick] = useState("Nick drugiego gracza")
+  let [nick, setNick] = useState("You")
+  let [enemyNick, setEnemyNick] = useState("Enemy")
 
   let [gameCode, setGameCode] = useState("01234567");
 
@@ -18,12 +18,22 @@ function HomePage({socket}) {
 
     // zmieniamy status newGame na true, pojawia się okno new-game-div
 
-    const httpBody = {
-      username: {nick},
-      room: 'tymczasowe'
+    setNewGame(!newGame)
+    if (newGame) {
+      setNewGameDivClass("game-start-container new-game-div div-visible-flex");
+    }else {
+      setNewGameDivClass("game-start-container new-game-div div-visible-no");
     }
 
-    fetch("http://127.0.0.1:5000/room",
+
+
+
+    const httpBody = {
+      username: nick,
+      room: gameCode
+    }
+
+    fetch("http://127.0.0.1:9000/room",
       {
         method: "POST",
         headers: {
@@ -34,22 +44,24 @@ function HomePage({socket}) {
       body: JSON.stringify(httpBody)}
     ).then((response) => 
       response.json()
-    ).then((json) => console.log(json)
+    ).then((json) => {
+      console.log(json)
+      // if json[]
+    }
     ).catch(error => console.error(error))
 
     console.log(newGame)
     
-    setNewGame(!newGame)
-    if (newGame) {
-      setNewGameDivClass("game-start-container new-game-div div-visible-flex");
-    }else {
-      setNewGameDivClass("game-start-container new-game-div div-visible-no");
-    }
+
   }
 
   const handleNickChange = (event) => {
       setNick(event.target.value)
   }
+
+  const handleGameCodeChange = (event) => {
+    setGameCode(event.target.value)
+}
 
     return (
       <>
@@ -61,14 +73,14 @@ function HomePage({socket}) {
             </Link>
             <div className="game-settings">
               <input type="text" placeholder={nick} onChange={handleNickChange} value={nick}/>
+              <input type="text" id="kod-gry" placeholder='Kod pokoju...' onChange={handleGameCodeChange}/>
               <button onClick={createNewGame}>Stwórz Grę</button>
-              <input type="text" id="kod-gry" placeholder='Kod pokoju...'/>
               <button>Dołącz do gry</button>
             </div>
           </div>
 
           <div className={newGameDivClass} >
-            <h1>Przydzielony kod gry:</h1>
+            <h1>Ustalony kod gry:</h1>
             <h1>{gameCode}</h1>
             <input type="text" onChange={handleNickChange} value={nick} disabled/>
             <input type="text" value={enemyNick} className='secondPlayerNick' disabled/>
