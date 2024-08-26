@@ -77,22 +77,31 @@
 }
 
 .attack-btn {
-    background: linear-gradient(98.3deg, rgb(0, 0, 0) 10.6%, rgb(255, 0, 0) 97.7%); 
+    background: linear-gradient(98.3deg, rgb(0, 0, 0) 10.6%, rgb(0, 255, 0) 97.7%); 
+    border: 1px solid green;
     outline: none;
     color: rgba(246, 246, 246, 0.833);
     padding: 10px;
     width: 150px;
-    border: 1px solid red;
     border-radius: 10px;
     font-size: 20px;
     font-weight: 900;
 }
 
 .attack-btn:hover {
-  box-shadow: 5px 5px 5px red;
+  box-shadow: 5px 5px 5px green;
 
 }
 
 .span-player-move h3, .span-player-move h4 {
     margin-bottom: 10px;
+}
+
+.disabled{
+  background: linear-gradient(98.3deg, rgb(0, 0, 0) 10.6%, rgb(255, 0, 0) 97.7%); 
+  border: 1px solid red;
+  pointer-events: none;
+  background-color: gray;
+
+  /* display: none; */
 }

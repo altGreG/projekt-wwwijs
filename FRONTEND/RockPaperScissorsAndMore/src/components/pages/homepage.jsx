@@ -2,14 +2,15 @@ import { json, Link } from 'react-router-dom';
 import "./homepage.css";
 import React, {useState} from 'react'
 
-function HomePage({socket}) {
+function HomePage({socket, sendStartData}) {
 
   let [newGame, setNewGame] = useState(true)
   let [newGameDivClass, setNewGameDivClass] = useState("game-start-container new-game-div div-visible-no")
   let [nick, setNick] = useState("You")
   let [enemyNick, setEnemyNick] = useState("Enemy")
-
-  let [gameCode, setGameCode] = useState("01234567");
+  let [gameCode, setGameCode] = useState("01234567")
+  let [nickRoomInputsStyle, setNickRoomInputsStyle] = useState("");
+  let [pageVisibility, setPageVisibility] = useState("container")
 
   const createNewGame = () => {
     // tutaj robimy zapytanie do api
@@ -46,7 +47,13 @@ function HomePage({socket}) {
       response.json()
     ).then((json) => {
       console.log(json)
-      // if json[]
+      if(json.roomCreated=="true") {
+        console.log("Pokój został stworzony!")
+        setNickRoomInputsStyle("inputs-disabled")
+        sendStartData(nick, enemyNick, gameCode)
+      }else {
+        console.log("Z pewnego powodu pokój nie został stworzony!")
+      }
     }
     ).catch(error => console.error(error))
 
@@ -61,21 +68,36 @@ function HomePage({socket}) {
 
   const handleGameCodeChange = (event) => {
     setGameCode(event.target.value)
-}
+  }
+
+  const joinGame = () => {
+    socket.emit('join', {username: nick, room: gameCode});
+
+    socket.on('full_room', (data) => {
+      console.log(data)
+      
+    })
+    socket.on('message', (data) => {
+      console.log(data)
+      setPageVisibility("div-visible-no")
+    })
+
+    
+  }
 
     return (
       <>
-        <div className="container">
+        <div className={pageVisibility}>
 
           <div className="game-start-container">
             <Link to="/" className='homepage-logo'>
               <img src="../../public/logo.jpg"/>
             </Link>
             <div className="game-settings">
-              <input type="text" placeholder={nick} onChange={handleNickChange} value={nick}/>
-              <input type="text" id="kod-gry" placeholder='Kod pokoju...' onChange={handleGameCodeChange}/>
-              <button onClick={createNewGame}>Stwórz Grę</button>
-              <button>Dołącz do gry</button>
+              <input type="text" className={nickRoomInputsStyle} placeholder={nick} onChange={handleNickChange} value={nick}/>
+              <input type="text" className={nickRoomInputsStyle} id="kod-gry" placeholder='Kod pokoju...' onChange={handleGameCodeChange}/>
+              <button className={nickRoomInputsStyle} onClick={createNewGame}>Stwórz Grę</button>
+              <button className={nickRoomInputsStyle}>Dołącz do gry</button>
             </div>
           </div>
 
@@ -83,8 +105,8 @@ function HomePage({socket}) {
             <h1>Ustalony kod gry:</h1>
             <h1>{gameCode}</h1>
             <input type="text" onChange={handleNickChange} value={nick} disabled/>
-            <input type="text" value={enemyNick} className='secondPlayerNick' disabled/>
-            <button>Zacznij grę</button>
+            {/* <input type="text" value={enemyNick} className='secondPlayerNick' disabled/> */}
+            <button onClick={joinGame}>Zacznij grę</button>
           </div>
 
         </div>

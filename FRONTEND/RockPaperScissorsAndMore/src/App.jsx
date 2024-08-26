@@ -19,6 +19,10 @@ function App() {
   let [isGameRulesActive, setIsGameRulesActive] = useState(false)
   let [isAboutActive, setIsAboutActive] = useState(false)
 
+  let [nick, setNick] = useState("You")
+  let [enemyNick, setEnemyNick] = useState("Enemy")
+  let [gameCode, setGameCode] = useState("01234567")
+
   const handleCloseGameRules = () => {
     console.log(isGameRulesActive)
     setIsGameRulesActive(!isGameRulesActive)
@@ -27,6 +31,12 @@ function App() {
   const handleCloseAbout = () => {
     console.log(isAboutActive)
     setIsAboutActive(!isAboutActive)
+  }
+
+  const handleSendingStartDataToGamePage = (n, en, gc) => {
+    setNick(n)
+    setEnemyNick(en)
+    setGameCode(gc)
   }
 
   // const socket = new WebSocket("ws://localhost:8080")
@@ -49,8 +59,8 @@ function App() {
         <NavBar showGameRules={handleCloseGameRules} showAbout={handleCloseAbout}/>
         <GameRules isActive={isGameRulesActive} closeGameRules={handleCloseGameRules}/>
         <About isActive={isAboutActive} closeAbout={handleCloseAbout}/>
-        <HomePage socket={socket}/>
-        <GamePage socket={socket}/>
+        <HomePage socket={socket} sendStartData={handleSendingStartDataToGamePage}/>
+        <GamePage socket={socket} pnick={nick} eNick={enemyNick} gCode={gameCode}/>
         <Routes>
           <Route path='/' exact component={HomePage}/>
           <Route path='/game' exact component={GamePage}/>

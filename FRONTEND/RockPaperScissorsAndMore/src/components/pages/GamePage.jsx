@@ -2,22 +2,34 @@ import { Link } from 'react-router-dom';
 import React, {useState} from 'react'
 import "./GamePage.css";
 
-function GamePage({socket}) {
+function GamePage({socket, pnick, eNick, gCode}) {
 
-  let [playerNick, setPlayerNick] = useState("Your's Nick")
+  let [playerNick, setPlayerNick] = useState(pnick)
   let [playerScore, setPlayerScore] = useState("0")
-  let [enemyNick, setEnemyNick] = useState("Enemy Nick")
+  let [enemyNick, setEnemyNick] = useState(eNick)
   let [enemyScore, setEnemyScore] = useState("0")
+  let [gameCode, setGameCode] = useState(gCode)
 
   let [playerMove, setPlayerMove] = useState("nothing")
 
   let [possibleMoves, setPossibleMoves] = useState(["fire", "scissors", "snake", "human", "tree", "wolf", "sponge", "paper", "air", "water", "dragon", "devil", "lightning", "gun", "rock"])
+
+  let [attackButtonStyle, setAttackButtonStyle] = useState("attack-btn disabled")
+
 
   const handleMovePick = (event) => {
     if (event.target.name != playerMove){
       setPlayerMove(event.target.id)
     }
   }
+
+  const handleAttack= () => {
+    socket.emit('on_play', {username: playerNick, room: gameCode, playerMove: playerMove})
+  }
+
+  socket.on('secondPlayer', (data) =>{
+    setAttackButtonStyle("attack-btn")
+  })
 
     return (
       <>
@@ -59,9 +71,9 @@ function GamePage({socket}) {
             </span>
 
             <span>
-              <h4>Time left: 00:00</h4>
+              <h4>Room: {gameCode}</h4>
               <br />
-              <button className='attack-btn'>Attack</button>
+              <button className={attackButtonStyle} onClick={handleAttack}>Attack</button>
             </span>
 
             <span className='span-player-move'>

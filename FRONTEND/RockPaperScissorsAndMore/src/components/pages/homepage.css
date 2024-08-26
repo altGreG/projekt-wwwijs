@@ -98,3 +98,11 @@ secondPlayerNick::placeholder {
     margin-top: 20px;
 }
 
+.inputs-disabled{
+    pointer-events: none;
+    /* display: none; */
+}
+
+.div-visible-no{
+    display: none;
+}

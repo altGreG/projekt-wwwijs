@@ -47,14 +47,14 @@ def determine_winner(player1_name, player1_choice, player2_name, player2_choice)
         return f'{player2_name} wins', player2_name
 
 
-@bp.route('/', methods=['GET', 'POST'])
-# @cross_origin(origin='*')
-def index():
-    if request.method == 'POST':
-        username = request.form['username']
-        room = request.form['room']
-        return redirect(url_for('main.room', room=room, username=username))
-    return render_template('index.html')
+# @bp.route('/', methods=['GET', 'POST'])
+# # @cross_origin(origin='*')
+# def index():
+#     if request.method == 'POST':
+#         username = request.form['username']
+#         room = request.form['room']
+#         return redirect(url_for('main.room', room=room, username=username))
+#     return render_template('index.html')
 
 @bp.route('/room', methods=['POST'])
 # @cross_origin(origin='*')
