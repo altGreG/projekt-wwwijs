@@ -113,8 +113,20 @@ def on_join(data):
         rooms[room]["players"][username] = None
         rooms[room]["scores"][username] = 0
         emit('message', {'msg': f'{username} has entered the room.'}, room=room)
-    else:
+    if len(rooms[room]["players"]) == 2:
+        print(rooms[room])
+        print(rooms[room]["players"])
+        for i, (key, value) in enumerate(rooms[room]["players"].items()):
+            if i == 0:
+                player1 = key
+            elif i == 1:
+                player2 = key
+        emit('secondPlayer', {'player1': player1, 'player2': player2}, room=room)
+    if len(rooms[room]["players"]) > 2:
         emit('full_room', {'msg': f'Room {room} is full. You cannot join.'}, to=request.sid)
+
+
+
 
 @socketio.on('play')
 def on_play(data):

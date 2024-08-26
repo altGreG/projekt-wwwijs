@@ -5,7 +5,7 @@ socketio = SocketIO( logger=True, engineio_logger=True)
 
 
 rooms = {}
-
+# rooms = {nrpokoju1{gracz1,gracz2}}
 def determine_winner(player1_choice, player2_choice):
     outcomes = {
         'rock': 'scissors',
@@ -31,7 +31,15 @@ def on_join(data):
         join_room(room)
         rooms[room][username] = None  # Rejestracja gracza w pokoju, ale bez ruchu
         emit('message', {'msg': f'{username} has entered the room.'}, room=room)
-    else:
+    
+    
+    if len(rooms[room]) == 2:
+        player1 = rooms[room][0]
+        player2 = rooms[room][1]
+        emit('players', {'player1': player1, 'player2': player2}, room=room)
+
+    
+    if len(rooms[room]) > 2:
         emit('message', {'msg': f'Room {room} is full. Cannot join.'})
 
 @socketio.on('play')

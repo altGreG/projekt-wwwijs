@@ -32,7 +32,7 @@ function GamePage({socket, pNick, eNick, gCode}) {
   }
 
   socket.on('secondPlayer', (data) =>{
-    console.log("Enemy nick: " + data)
+    console.log(data)
     setAttackButtonStyle("attack-btn")
   })
 
