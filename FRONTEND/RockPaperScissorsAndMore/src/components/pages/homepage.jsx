@@ -2,7 +2,7 @@ import { json, Link } from 'react-router-dom';
 import "./homepage.css";
 import React, {useState} from 'react'
 
-function HomePage() {
+function HomePage({socket}) {
 
   let [newGame, setNewGame] = useState(false)
   let [newGameDivClass, setNewGameDivClass] = useState("game-start-container new-game-div div-visible-no")

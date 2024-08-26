@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for
 from flask_socketio import emit, join_room
 from flask import json
 from . import socketio
+from flask_cors import CORS, cross_origin
 
 bp = Blueprint('main', __name__)
 
@@ -47,6 +48,7 @@ def determine_winner(player1_name, player1_choice, player2_name, player2_choice)
 
 
 @bp.route('/', methods=['GET', 'POST'])
+# @cross_origin(origin='*')
 def index():
     if request.method == 'POST':
         username = request.form['username']
@@ -55,6 +57,7 @@ def index():
     return render_template('index.html')
 
 @bp.route('/room', methods=['POST'])
+# @cross_origin(origin='*')
 # def room():
 #     username = request.form['username']
 #     room = request.form['room']
@@ -92,11 +95,12 @@ def room():
 
     return response
 
-@bp.route('/game/<room>/<username>', methods=['POST'])
-def game(room, username):
-    return render_template('game.html', username=username, room=room)
+# @bp.route('/game/<room>/<username>', methods=['POST'])
+# def game(room, username):
+#     return render_template('game.html', username=username, room=room)
 
 @socketio.on('join')
+# @cross_origin(origin='*')
 def on_join(data):
     username = data['username']
     room = data['room']

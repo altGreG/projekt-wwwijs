@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import React, {useState} from 'react'
 import "./GamePage.css";
 
-function GamePage() {
+function GamePage({socket}) {
 
   let [playerNick, setPlayerNick] = useState("Your's Nick")
   let [playerScore, setPlayerScore] = useState("0")
