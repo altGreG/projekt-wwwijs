@@ -42,9 +42,9 @@ def determine_winner(player1_name, player1_choice, player2_name, player2_choice)
     if player1_choice == player2_choice:
         return 'Draw', None
     elif player2_choice in WINNING_RELATIONS[player1_choice]:
-        return f'{player1_name} wins', player1_name
+        return f'{player1_name}', player1_name
     else:
-        return f'{player2_name} wins', player2_name
+        return f'{player2_name}', player2_name
 
 
 # @bp.route('/', methods=['GET', 'POST'])
@@ -152,7 +152,7 @@ def on_play(data):
                 'move1': moves[0],
                 'player2': players[1],
                 'move2': moves[1],
-                'result': result_text,
+                'winner': result_text,
                 'score1': rooms[room]["scores"][players[0]],
                 'score2': rooms[room]["scores"][players[1]],
                 'game_over': False
@@ -188,7 +188,7 @@ def on_play(data):
             else:
                 rooms[room]["players"] = {player: None for player in rooms[room]["players"]}
     else:
-        emit('message', {'msg': 'Unrecognized player or room.'})
+        emit('result', {'msg': 'Unrecognized player or room.'})
 
 def reset_room(room):
     if room in rooms:
