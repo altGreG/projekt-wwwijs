@@ -12,7 +12,10 @@ function GamePage({socket, pNick, eNick, gCode, fPlayer}) {
 
   let [roundStarted, setRoundStarted] = useState(false)
   let [roundNumer, setRoundNumber] = useState(1)
-  let [messageCounter, setMessageCounter] = useState(0)
+  // let [messageCounter, setMessageCounter] = useState(0)
+
+  console.log("Ustawiam counter na zero!")
+  localStorage.setItem("counter", 0)
 
 
   let playerNick = pNick;
@@ -86,14 +89,25 @@ function GamePage({socket, pNick, eNick, gCode, fPlayer}) {
         setEnemyScore(data.score1)
       }
     }else{
-
-      if(messageCounter > 10){
-        window.alert("Koniec Gry!")
+      console.log(data)
+      console.log("Koniec gry!!!!")
+      setRoundStarted(false)
+      setAttackButtonStyle('attack-btn disabled')
+      if(localStorage.getItem("counter") >= 30){
+        if(data.score1 == 3){
+          window.alert("Koniec Gry! Wygrał gracz o nicku: " + data.player1 + "\n Gratulacje!")
+        }else{
+          window.alert("Koniec Gry! Wygrał gracz o nicku: " + data.player2 + "\n Gratulacje!")
+        }
         window.location.reload();
       }else{
-        setMessageCounter(messageCounter+1)
+        let temp = Number(localStorage.getItem("counter"))
+        localStorage.removeItem("counter");
+        localStorage.setItem("counter", temp + 1)
+        console.log(localStorage.getItem("counter"))
+
       }
-      console.log(messageCounter)
+
       // messageCounter++
       // console.log(messageCounter)
     }
