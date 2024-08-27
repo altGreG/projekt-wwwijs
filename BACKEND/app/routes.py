@@ -38,6 +38,8 @@ users = []
 
 rooms = {}
 
+rounds = {}
+
 def determine_winner(player1_name, player1_choice, player2_name, player2_choice):
     if player1_choice == player2_choice:
         return 'Draw', None
@@ -107,7 +109,8 @@ def on_join(data):
     
     if room not in rooms:
         rooms[room] = {"players": {}, "scores": {}}
-    
+        rounds["room"] = 0
+        
     if len(rooms[room]["players"]) < 2:
         join_room(room)
         rooms[room]["players"][username] = None
@@ -140,7 +143,9 @@ def on_play(data):
             players = list(rooms[room]["players"].keys())
             moves = list(rooms[room]["players"].values())
             result_text, winner = determine_winner(players[0], moves[0], players[1], moves[1])
-
+            round = rounds["room"] 
+            round = round + 1
+            rounds["room"] = round
             if winner == players[0]:
                 rooms[room]["scores"][players[0]] += 1
             elif winner == players[1]:
@@ -155,7 +160,8 @@ def on_play(data):
                 'winner': result_text,
                 'score1': rooms[room]["scores"][players[0]],
                 'score2': rooms[room]["scores"][players[1]],
-                'game_over': False
+                'game_over': False,
+                'round_number': round
             }, room=room)
 
             # Sprawdzenie, czy któryś z graczy wygrał
@@ -169,7 +175,8 @@ def on_play(data):
                     'result': final_result,
                     'score1': rooms[room]["scores"][players[0]],
                     'score2': rooms[room]["scores"][players[1]],
-                    'game_over': True
+                    'game_over': True,
+                    'round_number': round
                 }, room=room)
                 reset_room(room)
             elif rooms[room]["scores"][players[1]] == 3:
@@ -182,7 +189,8 @@ def on_play(data):
                     'result': final_result,
                     'score1': rooms[room]["scores"][players[0]],
                     'score2': rooms[room]["scores"][players[1]],
-                    'game_over': True
+                    'game_over': True,
+                    'round_number': round
                 }, room=room)
                 reset_room(room)
             else:
