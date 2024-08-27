@@ -114,8 +114,7 @@ def on_join(data):
         rooms[room]["scores"][username] = 0
         emit('message', {'msg': f'{username} has entered the room.'}, room=room)
     if len(rooms[room]["players"]) == 2:
-        print(rooms[room])
-        print(rooms[room]["players"])
+
         for i, (key, value) in enumerate(rooms[room]["players"].items()):
             if i == 0:
                 player1 = key
@@ -128,11 +127,11 @@ def on_join(data):
 
 
 
-@socketio.on('play')
+@socketio.on('on_play')
 def on_play(data):
     username = data['username']
     room = data['room']
-    player_move = data['move']
+    player_move = data['playerMove']
     
     if room in rooms and username in rooms[room]["players"]:
         rooms[room]["players"][username] = player_move

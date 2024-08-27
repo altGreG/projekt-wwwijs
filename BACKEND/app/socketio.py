@@ -18,7 +18,7 @@ def determine_winner(player1_choice, player2_choice):
         return 'Player 1 wins'
     else:
         return 'Player 2 wins'
-
+"""
 @socketio.on('join')
 def on_join(data):
     username = data['username']
@@ -41,7 +41,7 @@ def on_join(data):
     
     if len(rooms[room]) > 2:
         emit('message', {'msg': f'Room {room} is full. Cannot join.'})
-
+"""
 @socketio.on('play')
 def on_play(data):
     username = data['username']
