@@ -12,6 +12,8 @@ function GamePage({socket, pNick, eNick, gCode, fPlayer}) {
 
   let [roundStarted, setRoundStarted] = useState(false)
   let [roundNumer, setRoundNumber] = useState(1)
+  let [messageCounter, setMessageCounter] = useState(0)
+
 
   let playerNick = pNick;
   // let enemyNick = eNick;
@@ -65,21 +67,35 @@ function GamePage({socket, pNick, eNick, gCode, fPlayer}) {
 
   socket.on('result', (data) => {
     setRoundStarted(true)
-    if(playerMove != "nothing"){
-      setAttackButtonStyle('attack-btn')
-    }else(
-      setAttackButtonStyle('attack-btn disabled')
-    )
 
-
-    console.log(data)
-    setRoundNumber(data.round_number + 1)
-    if(data.player1 == playerNick){
-      setPlayerScore(data.score1)
-      setEnemyScore(data.score2)
+    if(!data.game_over){
+      if(playerMove != "nothing"){
+        setAttackButtonStyle('attack-btn')
+      }else(
+        setAttackButtonStyle('attack-btn disabled')
+      )
+  
+  
+      console.log(data)
+      setRoundNumber(data.round_number + 1)
+      if(data.player1 == playerNick){
+        setPlayerScore(data.score1)
+        setEnemyScore(data.score2)
+      }else{
+        setPlayerScore(data.score2)
+        setEnemyScore(data.score1)
+      }
     }else{
-      setPlayerScore(data.score2)
-      setEnemyScore(data.score1)
+
+      if(messageCounter > 10){
+        window.alert("Koniec Gry!")
+        window.location.reload();
+      }else{
+        setMessageCounter(messageCounter+1)
+      }
+      console.log(messageCounter)
+      // messageCounter++
+      // console.log(messageCounter)
     }
   })
 
@@ -94,9 +110,7 @@ function GamePage({socket, pNick, eNick, gCode, fPlayer}) {
 
           <div className="game-display">
           <div className="rounds-counter">
-            <h2>Jak Grać?</h2>
             <h2>Round number: {roundNumer}</h2>
-            <h2>Historia Gry</h2>
           </div>
             <div className="moves-picker">
               {possibleMoves.map((move) => {
@@ -118,7 +132,7 @@ function GamePage({socket, pNick, eNick, gCode, fPlayer}) {
           <div className="game-options">
             <span>
               <h2>{(isFirstPlayer)?playerNick:enemyNick}: {(isFirstPlayer)?playerScore:enemyScore}</h2>
-              <h2>vs</h2>
+              <hr />
               <h2>{(isFirstPlayer)?enemyNick:playerNick}: {(isFirstPlayer)?enemyScore:playerScore}</h2>
             </span>
 
