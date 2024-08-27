@@ -50,7 +50,7 @@ function HomePage({socket, sendStartData}) {
       if(json.roomCreated=="true") {
         console.log("Pokój został stworzony!")
         setNickRoomInputsStyle("inputs-disabled")
-        sendStartData(nick, enemyNick, gameCode)
+        sendStartData(nick, enemyNick, gameCode, true)
       }else {
         console.log("Z pewnego powodu pokój nie został stworzony!")
       }
@@ -90,7 +90,7 @@ function HomePage({socket, sendStartData}) {
     socket.on('message', (data) => {
       console.log(data)
       setPageVisibility("div-visible-no")
-      sendStartData(nick, enemyNick, gameCode)
+      sendStartData(nick, enemyNick, gameCode, false)
     })
   }
 

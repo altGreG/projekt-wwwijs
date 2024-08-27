@@ -22,6 +22,7 @@ function App() {
   let [nick, setNick] = useState("You")
   let [enemyNick, setEnemyNick] = useState("Enemy")
   let [gameCode, setGameCode] = useState("01234567")
+  let [isFirstPlayer, setIsFirstPlayer] = useState(false)
 
   const handleCloseGameRules = () => {
     console.log(isGameRulesActive)
@@ -33,23 +34,14 @@ function App() {
     setIsAboutActive(!isAboutActive)
   }
 
-  const handleSendingStartDataToGamePage = (n, en, gc) => {
+  const handleSendingStartDataToGamePage = (n, en, gc, fp) => {
     setNick(n)
-    setEnemyNick(en)
+    // setEnemyNick(en)
     setGameCode(gc)
+    setIsFirstPlayer(fp)
+    console.log("Pierwszy?" + fp)
   }
 
-  // const socket = new WebSocket("ws://localhost:8080")
-
-  // // connection opened
-  // socket.addEventListener("open", event => {
-  //   socket.send("Connection established")
-  // })
-
-  // // listen for messages
-  // socket.addEventListener("message", event => {
-  //   console.log("Message from server ", event.data)
-  // })
 
   return (
     <>
@@ -60,7 +52,7 @@ function App() {
         <GameRules isActive={isGameRulesActive} closeGameRules={handleCloseGameRules}/>
         <About isActive={isAboutActive} closeAbout={handleCloseAbout}/>
         <HomePage socket={socket} sendStartData={handleSendingStartDataToGamePage}/>
-        <GamePage socket={socket} pNick={nick} eNick={enemyNick} gCode={gameCode}/>
+        <GamePage socket={socket} pNick={nick} eNick={enemyNick} gCode={gameCode} fPlayer={isFirstPlayer}/>
         <Routes>
           <Route path='/' exact component={HomePage}/>
           <Route path='/game' exact component={GamePage}/>

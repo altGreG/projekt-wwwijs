@@ -2,17 +2,19 @@ import { Link } from 'react-router-dom';
 import React, {useState} from 'react'
 import "./GamePage.css";
 
-function GamePage({socket, pNick, eNick, gCode}) {
+function GamePage({socket, pNick, eNick, gCode, fPlayer}) {
 
   // let [playerNick, setPlayerNick] = useState(pNick)
   let [playerScore, setPlayerScore] = useState("0")
-  // let [enemyNick, setEnemyNick] = useState(eNick)
+  let [enemyNick, setEnemyNick] = useState("Enemy")
   let [enemyScore, setEnemyScore] = useState("0")
   // let [gameCode, setGameCode] = useState(gCode)
 
   let playerNick = pNick;
-  let enemyNick = eNick;
+  // let enemyNick = eNick;
   let gameCode = gCode;
+
+  let isFirstPlayer = fPlayer
 
   let [playerMove, setPlayerMove] = useState("nothing")
 
@@ -25,14 +27,30 @@ function GamePage({socket, pNick, eNick, gCode}) {
     if (event.target.name != playerMove){
       setPlayerMove(event.target.id)
     }
+    if(attackButtonStyle!='attack-btn'){
+      setAttackButtonStyle('attack-btn')
+    }
   }
 
   const handleAttack= () => {
     socket.emit('on_play', {username: playerNick, room: gameCode, playerMove: playerMove})
+    setAttackButtonStyle('attack-btn disabled')
+    setPlayerMove('nothing')
+    // setPossibleMoves(possibleMoves.filter(it != playerMove))
+    const filtering = move => move != playerMove
+    console.log(possibleMoves.filter(filtering))
+    setPossibleMoves(possibleMoves.filter(filtering))
   }
 
   socket.on('secondPlayer', (data) =>{
     console.log(data)
+
+    if (data.player1 == playerNick){
+      setEnemyNick(data.player2)
+    }else{
+      setEnemyNick(data.player1)
+    }
+
     setAttackButtonStyle("attack-btn")
   })
 
@@ -70,9 +88,9 @@ function GamePage({socket, pNick, eNick, gCode}) {
 
           <div className="game-options">
             <span>
-              <h2>{playerNick}: {playerScore}</h2>
+              <h2>{(isFirstPlayer)?playerNick:enemyNick}: {(isFirstPlayer)?playerScore:enemyScore}</h2>
               <h2>vs</h2>
-              <h2>{enemyNick}: {enemyScore}</h2>
+              <h2>{(isFirstPlayer)?enemyNick:playerNick}: {(isFirstPlayer)?enemyScore:playerScore}</h2>
             </span>
 
             <span>
