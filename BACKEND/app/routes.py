@@ -188,7 +188,7 @@ def on_play(data):
             else:
                 rooms[room]["players"] = {player: None for player in rooms[room]["players"]}
     else:
-        emit('message', {'msg': 'Unrecognized player or room.'})
+        emit('result', {'msg': 'Unrecognized player or room.'})
 
 def reset_room(room):
     if room in rooms:
