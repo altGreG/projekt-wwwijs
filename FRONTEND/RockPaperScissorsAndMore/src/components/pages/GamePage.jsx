@@ -10,11 +10,15 @@ function GamePage({socket, pNick, eNick, gCode, fPlayer}) {
   let [enemyScore, setEnemyScore] = useState("0")
   // let [gameCode, setGameCode] = useState(gCode)
 
+  let [roundStarted, setRoundStarted] = useState(false)
+
   let playerNick = pNick;
   // let enemyNick = eNick;
   let gameCode = gCode;
 
   let isFirstPlayer = fPlayer
+
+
 
   let [playerMove, setPlayerMove] = useState("nothing")
 
@@ -27,7 +31,7 @@ function GamePage({socket, pNick, eNick, gCode, fPlayer}) {
     if (event.target.name != playerMove){
       setPlayerMove(event.target.id)
     }
-    if(attackButtonStyle!='attack-btn'){
+    if(attackButtonStyle!='attack-btn' && roundStarted){
       setAttackButtonStyle('attack-btn')
     }
   }
@@ -51,7 +55,18 @@ function GamePage({socket, pNick, eNick, gCode, fPlayer}) {
       setEnemyNick(data.player1)
     }
 
-    setAttackButtonStyle("attack-btn")
+    if(playerMove != "nothing"){
+      setAttackButtonStyle('attack-btn')
+    }
+    setRoundStarted(true)
+  })
+
+  socket.on('result', (data) => {
+    setRoundStarted(true)
+    if(playerMove != "nothing"){
+      setAttackButtonStyle('attack-btn')
+    }
+    console.log(data)
   })
 
     return (
