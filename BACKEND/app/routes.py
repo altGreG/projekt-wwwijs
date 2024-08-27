@@ -110,7 +110,7 @@ def on_join(data):
     if room not in rooms:
         rooms[room] = {"players": {}, "scores": {}}
         rounds["room"] = 0
-        
+
     if len(rooms[room]["players"]) < 2:
         join_room(room)
         rooms[room]["players"][username] = None
@@ -166,7 +166,7 @@ def on_play(data):
 
             # Sprawdzenie, czy któryś z graczy wygrał
             if rooms[room]["scores"][players[0]] == 3:
-                final_result = f'{players[0]} wins the game!'
+                final_result = f'{players[0]}'
                 emit('result', {
                     'player1': players[0],
                     'move1': moves[0],
@@ -180,7 +180,7 @@ def on_play(data):
                 }, room=room)
                 reset_room(room)
             elif rooms[room]["scores"][players[1]] == 3:
-                final_result = f'{players[1]} wins the game!'
+                final_result = f'{players[1]}'
                 emit('result', {
                     'player1': players[0],
                     'move1': moves[0],
