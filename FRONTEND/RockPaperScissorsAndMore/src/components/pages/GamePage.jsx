@@ -11,6 +11,7 @@ function GamePage({socket, pNick, eNick, gCode, fPlayer}) {
   // let [gameCode, setGameCode] = useState(gCode)
 
   let [roundStarted, setRoundStarted] = useState(false)
+  let [roundNumer, setRoundNumber] = useState(1)
 
   let playerNick = pNick;
   // let enemyNick = eNick;
@@ -31,7 +32,7 @@ function GamePage({socket, pNick, eNick, gCode, fPlayer}) {
     if (event.target.name != playerMove){
       setPlayerMove(event.target.id)
     }
-    if(attackButtonStyle!='attack-btn' && roundStarted){
+    if(roundStarted){
       setAttackButtonStyle('attack-btn')
     }
   }
@@ -39,7 +40,8 @@ function GamePage({socket, pNick, eNick, gCode, fPlayer}) {
   const handleAttack= () => {
     socket.emit('on_play', {username: playerNick, room: gameCode, playerMove: playerMove})
     setAttackButtonStyle('attack-btn disabled')
-    setPlayerMove('nothing')
+    setPlayerMove("nothing")
+    setRoundStarted(false)
     // setPossibleMoves(possibleMoves.filter(it != playerMove))
     const filtering = move => move != playerMove
     console.log(possibleMoves.filter(filtering))
@@ -54,19 +56,31 @@ function GamePage({socket, pNick, eNick, gCode, fPlayer}) {
     }else{
       setEnemyNick(data.player1)
     }
-
+    setRoundStarted(true)
     if(playerMove != "nothing"){
       setAttackButtonStyle('attack-btn')
     }
-    setRoundStarted(true)
+    
   })
 
   socket.on('result', (data) => {
     setRoundStarted(true)
     if(playerMove != "nothing"){
       setAttackButtonStyle('attack-btn')
-    }
+    }else(
+      setAttackButtonStyle('attack-btn disabled')
+    )
+
+
     console.log(data)
+    setRoundNumber(data.round_number + 1)
+    if(data.player1 == playerNick){
+      setPlayerScore(data.score1)
+      setEnemyScore(data.score2)
+    }else{
+      setPlayerScore(data.score2)
+      setEnemyScore(data.score1)
+    }
   })
 
     return (
@@ -81,7 +95,7 @@ function GamePage({socket, pNick, eNick, gCode, fPlayer}) {
           <div className="game-display">
           <div className="rounds-counter">
             <h2>Jak Grać?</h2>
-            <h2>Runda 1 z 20</h2>
+            <h2>Round number: {roundNumer}</h2>
             <h2>Historia Gry</h2>
           </div>
             <div className="moves-picker">
