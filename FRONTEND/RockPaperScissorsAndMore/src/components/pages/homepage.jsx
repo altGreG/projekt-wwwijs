@@ -11,6 +11,8 @@ function HomePage({socket, sendStartData}) {
   let [gameCode, setGameCode] = useState("01234567")
   let [nickRoomInputsStyle, setNickRoomInputsStyle] = useState("");
   let [pageVisibility, setPageVisibility] = useState("container")
+  let [errorMessage, setErrorMessage] = useState("No errors!")
+  let [errorBoxStyle, setErrorBoxStyle] = useState("error-box div-visible-no")
 
   const createNewGame = () => {
     // tutaj robimy zapytanie do api
@@ -53,6 +55,9 @@ function HomePage({socket, sendStartData}) {
         sendStartData(nick, enemyNick, gameCode, true)
       }else {
         console.log("Z pewnego powodu pokój nie został stworzony!")
+        setErrorMessage("Z pewnego powodu pokój nie został stworzony!")
+        setErrorBoxStyle("error-box")
+
       }
     }
     ).catch(error => console.error(error))
@@ -75,7 +80,8 @@ function HomePage({socket, sendStartData}) {
 
     socket.on('full_room', (data) => {
       console.log(data)
-      
+      setErrorMessage(data.msg)
+      setErrorBoxStyle("error-box")
     })
     socket.on('message', (data) => {
       console.log(data)
@@ -86,6 +92,12 @@ function HomePage({socket, sendStartData}) {
 
   const joinGameByCode = () => {
     socket.emit('join', {username: nick, room: gameCode});
+
+    socket.on('full_room', (data) => {
+      console.log(data)
+      setErrorMessage(data.msg)
+      setErrorBoxStyle("error-box")
+    })
 
     socket.on('message', (data) => {
       console.log(data)
@@ -107,6 +119,9 @@ function HomePage({socket, sendStartData}) {
               <input type="text" className={nickRoomInputsStyle} id="kod-gry" placeholder='Kod pokoju...' onChange={handleGameCodeChange}/>
               <button className={nickRoomInputsStyle} onClick={createNewGame}>Stwórz Grę</button>
               <button className={nickRoomInputsStyle} onClick={joinGameByCode}>Dołącz do gry</button>
+            </div>
+            <div className={errorBoxStyle}>
+                {errorMessage}
             </div>
           </div>
 

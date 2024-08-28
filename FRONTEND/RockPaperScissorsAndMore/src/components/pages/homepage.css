@@ -106,3 +106,15 @@ secondPlayerNick::placeholder {
 .div-visible-no{
     display: none;
 }
+
+.error-box {
+    border: 2px solid red;
+    border-radius: 5px;
+    padding: 5px;
+    width: 400px;
+    min-height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}

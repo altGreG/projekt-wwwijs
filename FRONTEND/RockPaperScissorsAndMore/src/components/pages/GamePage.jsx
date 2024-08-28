@@ -36,10 +36,11 @@ function GamePage({socket, pNick, eNick, gCode, fPlayer}) {
   const handleMovePick = (event) => {
     if (event.target.name != playerMove){
       setPlayerMove(event.target.id)
+      if(roundStarted){
+        setAttackButtonStyle('attack-btn')
+      }
     }
-    if(roundStarted){
-      setAttackButtonStyle('attack-btn')
-    }
+    
   }
 
   const handleAttack= () => {
@@ -95,9 +96,9 @@ function GamePage({socket, pNick, eNick, gCode, fPlayer}) {
       setAttackButtonStyle('attack-btn disabled')
       if(localStorage.getItem("counter") >= 30){
         if(data.score1 == 3){
-          window.alert("Koniec Gry! Wygrał gracz o nicku: " + data.player1 + "\n Gratulacje!")
+          window.alert("Koniec Gry! Wygrał gracz o nicku: " + data.player1 + "\nGratulacje dla zwyciężcy!")
         }else{
-          window.alert("Koniec Gry! Wygrał gracz o nicku: " + data.player2 + "\n Gratulacje!")
+          window.alert("Koniec Gry! Wygrał gracz o nicku: " + data.player2 + "\nGratulacje dla zwyciężcy!")
         }
         window.location.reload();
       }else{
