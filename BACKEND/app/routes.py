@@ -72,8 +72,10 @@ def determine_winner(player1_name, player1_choice, player2_name, player2_choice)
 def room():
     username = request.json['username']
     room = request.json['room']
-    
-    response = json.jsonify({'roomCreated': 'true',
+    exists=True
+    if room in rooms:
+        exists=False
+    response = json.jsonify({'roomCreated': exists,
                              'username': username,
                              'room': room})
     response.headers.add('Access-Control-Allow-Origin', '*')
@@ -111,13 +113,13 @@ def on_join(data):
         rooms[room] = {"players": {}, "scores": {}}
         rounds["room"] = 0
     if len(rooms[room]["players"]) == 2:
-        emit('error', {'msg': f'Room {room} is full. You cannot join.'}, room=room)
+        emit('error', {'msg': f'Room {room} is full. You cannot join.'}, to=request.sid)
     if len(rooms[room]["players"]) < 2:
         join_room(room)
         rooms[room]["players"][username] = None
         rooms[room]["scores"][username] = 0
         emit('message', {'msg': f'{username} has entered the room.'}, room=room)
-        
+
         if len(rooms[room]["players"]) == 2:
 
             for i, (key, value) in enumerate(rooms[room]["players"].items()):

@@ -49,15 +49,16 @@ function HomePage({socket, sendStartData}) {
       response.json()
     ).then((json) => {
       console.log(json)
-      if(json.roomCreated=="true") {
+      if(json.roomCreated) {
         console.log("Pokój został stworzony!")
         setNickRoomInputsStyle("inputs-disabled")
         sendStartData(nick, enemyNick, gameCode, true)
       }else {
         console.log("Z pewnego powodu pokój nie został stworzony!")
         setErrorMessage("Z pewnego powodu pokój nie został stworzony!")
+        console.log(json)
         setErrorBoxStyle("error-box")
-
+        setNewGame(false)
       }
     }
     ).catch(error => console.error(error))
