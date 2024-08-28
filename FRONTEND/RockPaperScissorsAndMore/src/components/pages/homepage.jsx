@@ -89,7 +89,11 @@ function HomePage({socket, sendStartData}) {
     })
     
   }
-
+  socket.on('error', (data) => {
+    console.log(data)
+    setErrorMessage(data.msg)
+    setErrorBoxStyle("error-box")
+  })
   const joinGameByCode = () => {
     socket.emit('join', {username: nick, room: gameCode});
 

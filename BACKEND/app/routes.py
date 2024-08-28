@@ -110,22 +110,23 @@ def on_join(data):
     if room not in rooms:
         rooms[room] = {"players": {}, "scores": {}}
         rounds["room"] = 0
-
+    if len(rooms[room]["players"]) == 2:
+        emit('error', {'msg': f'Room {room} is full. You cannot join.'}, room=room)
     if len(rooms[room]["players"]) < 2:
         join_room(room)
         rooms[room]["players"][username] = None
         rooms[room]["scores"][username] = 0
         emit('message', {'msg': f'{username} has entered the room.'}, room=room)
-    if len(rooms[room]["players"]) == 2:
+        
+        if len(rooms[room]["players"]) == 2:
 
-        for i, (key, value) in enumerate(rooms[room]["players"].items()):
-            if i == 0:
-                player1 = key
-            elif i == 1:
-                player2 = key
-        emit('secondPlayer', {'player1': player1, 'player2': player2}, room=room)
-    if len(rooms[room]["players"]) > 2:
-        emit('full_room', {'msg': f'Room {room} is full. You cannot join.'}, to=request.sid)
+            for i, (key, value) in enumerate(rooms[room]["players"].items()):
+                if i == 0:
+                    player1 = key
+                elif i == 1:
+                    player2 = key
+            emit('secondPlayer', {'player1': player1, 'player2': player2}, room=room)
+
 
 
 
