@@ -72,10 +72,13 @@ def determine_winner(player1_name, player1_choice, player2_name, player2_choice)
 def room():
     username = request.json['username']
     room = request.json['room']
-    exists=True
+    notexists=True
     if room in rooms:
-        exists=False
-    response = json.jsonify({'roomCreated': exists,
+        notexists=False
+    if (notexists):
+        rooms[room] = {"players": {}, "scores": {}}
+        rounds["room"] = 0
+    response = json.jsonify({'roomCreated': notexists,
                              'username': username,
                              'room': room})
     response.headers.add('Access-Control-Allow-Origin', '*')
@@ -108,26 +111,31 @@ def room():
 def on_join(data):
     username = data['username']
     room = data['room']
-    
-    if room not in rooms:
+    exists=False
+    if room in rooms:
+        exists=True
+    """
         rooms[room] = {"players": {}, "scores": {}}
         rounds["room"] = 0
-    if len(rooms[room]["players"]) == 2:
-        emit('error', {'msg': f'Room {room} is full. You cannot join.'}, to=request.sid)
-    if len(rooms[room]["players"]) < 2:
-        join_room(room)
-        rooms[room]["players"][username] = None
-        rooms[room]["scores"][username] = 0
-        emit('message', {'msg': f'{username} has entered the room.'}, room=room)
-
+    """
+    if (exists):
         if len(rooms[room]["players"]) == 2:
+            emit('error', {'msg': f'Room {room} is full. You cannot join.'}, to=request.sid)
+        if len(rooms[room]["players"]) < 2:
+            
+            join_room(room)
+            rooms[room]["players"][username] = None
+            rooms[room]["scores"][username] = 0
+            emit('message', {'msg': f'{username} has entered the room.'}, room=room)
 
-            for i, (key, value) in enumerate(rooms[room]["players"].items()):
-                if i == 0:
-                    player1 = key
-                elif i == 1:
-                    player2 = key
-            emit('secondPlayer', {'player1': player1, 'player2': player2}, room=room)
+            if len(rooms[room]["players"]) == 2:
+
+                for i, (key, value) in enumerate(rooms[room]["players"].items()):
+                    if i == 0:
+                        player1 = key
+                    elif i == 1:
+                        player2 = key
+                emit('secondPlayer', {'player1': player1, 'player2': player2}, room=room)
 
 
 
