@@ -21,12 +21,7 @@ function HomePage({socket, sendStartData}) {
 
     // zmieniamy status newGame na true, pojawia się okno new-game-div
 
-    setNewGame(!newGame)
-    if (newGame) {
-      setNewGameDivClass("game-start-container new-game-div div-visible-flex");
-    }else {
-      setNewGameDivClass("game-start-container new-game-div div-visible-no");
-    }
+
 
 
 
@@ -53,12 +48,17 @@ function HomePage({socket, sendStartData}) {
         console.log("Pokój został stworzony!")
         setNickRoomInputsStyle("inputs-disabled")
         sendStartData(nick, enemyNick, gameCode, true)
+        setNewGame(!newGame)
+        if (newGame) {
+          setNewGameDivClass("game-start-container new-game-div div-visible-flex");
+        }else {
+          setNewGameDivClass("game-start-container new-game-div div-visible-no");
+        }
       }else {
-        console.log("Z pewnego powodu pokój nie został stworzony!")
-        setErrorMessage("Z pewnego powodu pokój nie został stworzony!")
+        console.log("Pokój już istnieje!!!")
+        setErrorMessage("Pokój już istnieje!!!")
         console.log(json)
         setErrorBoxStyle("error-box")
-        setNewGame(false)
       }
     }
     ).catch(error => console.error(error))
