@@ -77,7 +77,7 @@ def room():
         notexists=False
     if (notexists):
         rooms[room] = {"players": {}, "scores": {}}
-        rounds["room"] = 0
+        rounds[room] = 0
     response = json.jsonify({'roomCreated': notexists,
                              'username': username,
                              'room': room})
@@ -154,9 +154,10 @@ def on_play(data):
             players = list(rooms[room]["players"].keys())
             moves = list(rooms[room]["players"].values())
             result_text, winner = determine_winner(players[0], moves[0], players[1], moves[1])
-            round = rounds["room"] 
-            round = round + 1
-            rounds["room"] = round
+            rounds[room] = rounds[room] + 1
+            print (room + " rund  " )
+            print ( rounds[room])
+            print (rounds)
             if winner == players[0]:
                 rooms[room]["scores"][players[0]] += 1
             elif winner == players[1]:
@@ -172,7 +173,7 @@ def on_play(data):
                 'score1': rooms[room]["scores"][players[0]],
                 'score2': rooms[room]["scores"][players[1]],
                 'game_over': False,
-                'round_number': round
+                'round_number': rounds[room]
             }, room=room)
 
             # Sprawdzenie, czy któryś z graczy wygrał
@@ -187,7 +188,7 @@ def on_play(data):
                     'score1': rooms[room]["scores"][players[0]],
                     'score2': rooms[room]["scores"][players[1]],
                     'game_over': True,
-                    'round_number': round
+                    'round_number': rounds[room]
                 }, room=room)
                 reset_room(room)
             elif rooms[room]["scores"][players[1]] == 3:
@@ -201,7 +202,7 @@ def on_play(data):
                     'score1': rooms[room]["scores"][players[0]],
                     'score2': rooms[room]["scores"][players[1]],
                     'game_over': True,
-                    'round_number': round
+                    'round_number': rounds[room]
                 }, room=room)
                 reset_room(room)
             else:
