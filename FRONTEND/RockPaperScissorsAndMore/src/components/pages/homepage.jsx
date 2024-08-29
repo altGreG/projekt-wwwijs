@@ -13,18 +13,13 @@ function HomePage({socket, sendStartData}) {
   let [pageVisibility, setPageVisibility] = useState("container")
   let [errorMessage, setErrorMessage] = useState("No errors!")
   let [errorBoxStyle, setErrorBoxStyle] = useState("error-box div-visible-no")
-
+  let [isFirstPlayer, setIsFirstPlayer] = useState(false)
   const createNewGame = () => {
     // tutaj robimy zapytanie do api
 
     // otrzymujemy kod i dajemy do zmiennej gameCode
 
     // zmieniamy status newGame na true, pojawia się okno new-game-div
-
-
-
-
-
 
     const httpBody = {
       username: nick,
@@ -64,8 +59,6 @@ function HomePage({socket, sendStartData}) {
     ).catch(error => console.error(error))
 
     console.log(newGame)
-    
-
   }
 
   const handleNickChange = (event) => {
@@ -78,37 +71,29 @@ function HomePage({socket, sendStartData}) {
 
   const joinGame = () => {
     socket.emit('join', {username: nick, room: gameCode});
-
-    socket.on('full_room', (data) => {
-      console.log(data)
-      setErrorMessage(data.msg)
-      setErrorBoxStyle("error-box")
-    })
-    socket.on('message', (data) => {
-      console.log(data)
-      setPageVisibility("div-visible-no")
-    })
-    
   }
+
+  socket.on('full_room', (data) => {
+    console.log(data)
+    setErrorMessage(data.msg)
+    setErrorBoxStyle("error-box")
+  })
+
+  socket.on('message', (data) => {
+    console.log(data)
+    setPageVisibility("div-visible-no")
+  })
+
   socket.on('error', (data) => {
     console.log(data)
     setErrorMessage(data.msg)
     setErrorBoxStyle("error-box")
   })
+
+  
   const joinGameByCode = () => {
     socket.emit('join', {username: nick, room: gameCode});
-
-    socket.on('full_room', (data) => {
-      console.log(data)
-      setErrorMessage(data.msg)
-      setErrorBoxStyle("error-box")
-    })
-
-    socket.on('message', (data) => {
-      console.log(data)
-      setPageVisibility("div-visible-no")
-      sendStartData(nick, enemyNick, gameCode, false)
-    })
+    sendStartData(nick, enemyNick, gameCode, false)
   }
 
     return (

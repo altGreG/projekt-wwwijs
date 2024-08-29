@@ -39,7 +39,7 @@ function App() {
     // setEnemyNick(en)
     setGameCode(gc)
     setIsFirstPlayer(fp)
-    console.log("Pierwszy?" + fp)
+    console.log("Pierwszy? " + fp)
   }
 
   localStorage.setItem("gameEnded", 0)
