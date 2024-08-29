@@ -4,7 +4,6 @@ import "./About.css";
 
 function About({isActive, closeAbout}) {
 
-
     let aboutStyle = ""
 
     if (!isActive) {

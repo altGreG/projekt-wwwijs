@@ -8,23 +8,16 @@ function NavBar({showGameRules, showAbout}) {
         <nav className='nav'>
             <h1 className='game-title'> Rock, Paper, Scissors and more...</h1>
             <ul className="nav-list">
-                <Link to="/">
-                    <li className="nav-list-item">
-                        Home
-                    </li>
-                </Link>
                 <Link>
                     <li className="nav-list-item" onClick={showGameRules}>
-                        Game Rules
+                        Zasady gry
                     </li>
                 </Link>
                 <Link>
                     <li className="nav-list-item" onClick={showAbout}>
-                        About
+                        O nas
                     </li>
-                </Link>
-
-                    
+                </Link> 
             </ul>
         </nav>
       </>

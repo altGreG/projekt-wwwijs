@@ -42,11 +42,11 @@ function App() {
     console.log("Pierwszy?" + fp)
   }
 
+  localStorage.setItem("gameEnded", 0)
+  console.log("Ustawiłem game ended na 0!")
 
   return (
     <>
-
-    {/* Trzeba naprawić routing */}
       <Router>
         <NavBar showGameRules={handleCloseGameRules} showAbout={handleCloseAbout}/>
         <GameRules isActive={isGameRulesActive} closeGameRules={handleCloseGameRules}/>

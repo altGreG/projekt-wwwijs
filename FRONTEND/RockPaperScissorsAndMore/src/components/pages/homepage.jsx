@@ -131,9 +131,9 @@ function HomePage({socket, sendStartData}) {
           </div>
 
           <div className={newGameDivClass} >
-            <h1>Ustalony kod gry:</h1>
-            <h1>{gameCode}</h1>
-            <input type="text" onChange={handleNickChange} value={nick} disabled/>
+            <h1>Pokój został stworzony</h1>
+            {/* <h1>{gameCode}</h1> */}
+            {/* <input type="text" onChange={handleNickChange} value={nick} disabled/> */}
             {/* <input type="text" value={enemyNick} className='secondPlayerNick' disabled/> */}
             <button onClick={joinGame}>Zacznij grę</button>
           </div>

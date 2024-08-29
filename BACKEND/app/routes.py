@@ -136,7 +136,8 @@ def on_join(data):
                     elif i == 1:
                         player2 = key
                 emit('secondPlayer', {'player1': player1, 'player2': player2}, room=room)
-
+    else:
+        emit('error', {'msg': f'Room {room} doesn\'t exist.'}, to=request.sid)
 
 
 
