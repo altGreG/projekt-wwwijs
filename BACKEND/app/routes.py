@@ -120,7 +120,7 @@ def on_join(data):
     """
     if (exists):
         if len(rooms[room]["players"]) == 2:
-            emit('error', {'msg': f'Room {room} is full. You cannot join.'}, to=request.sid)
+            emit('error', {'msg': f'Pokój {room} jest pełny. Nie możesz dołączyć.'}, to=request.sid)
         if len(rooms[room]["players"]) < 2:
             
             join_room(room)
