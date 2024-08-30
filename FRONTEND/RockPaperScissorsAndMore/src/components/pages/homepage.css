@@ -1,0 +1,120 @@
+.game-start-container{
+    border: 3px solid rgba(246, 246, 246, 0.833);
+    border-radius: 15px;
+    min-height: 500px;
+    min-width: 380px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.game-start-container:first-child {
+    margin-right: 30px;
+}
+
+.game-start-container:last-child {
+    margin-left: 30px;
+}
+
+.game-start-container img{
+    height: 100px;
+}
+
+.homepage-logo {
+    display: flex;
+    flex-direction: column;
+}
+
+.homepage-logo h1{
+    color: aliceblue;
+    font-family: Arial, Helvetica, sans-serif;
+    text-decoration: none;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.game-settings {
+    height: 300px;
+    width: 100%;
+    /* border: 2px solid rgba(246, 246, 246, 0.833); */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.game-settings > * {
+    margin-bottom: 30px;
+}
+
+.game-settings button, .new-game-div button {
+    padding: 10px;
+    width: 200px;
+    border: 2px solid rgba(246, 246, 246, 0.833);
+    border-radius: 5px;
+    background: none;
+    color: rgba(246, 246, 246, 0.833);
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+.game-settings input, .new-game-div input {
+    width: 200px;
+    padding: 5px;
+    font-size: 16px;
+    color: rgba(246, 246, 246, 0.833);
+    border: none;
+    border-bottom: 2px solid rgba(246, 246, 246, 0.833);
+    background: none;
+}
+
+input:focus {
+    outline: none;
+}
+
+.new-game-div {
+    /* display: none; */
+    display: flex;
+    justify-content: flex-start;
+    min-height: auto !important;
+    padding: 20px 20px 50px 20px;
+}
+
+.new-game-div input {
+    margin-top: 20px;
+    padding: 20px;
+    border: 2px solid rgba(246, 246, 246, 0.833);
+}
+
+secondPlayerNick::placeholder {
+    color: red;
+}
+
+.new-game-div button {
+    margin-top: 20px;
+}
+
+.inputs-disabled{
+    pointer-events: none;
+    /* display: none; */
+}
+
+.div-visible-no{
+    display: none;
+}
+
+.error-box {
+    border: 2px solid red;
+    border-radius: 5px;
+    padding: 5px;
+    width: 400px;
+    min-height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}

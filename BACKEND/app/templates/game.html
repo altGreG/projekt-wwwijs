@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock-Paper-Scissors-Lizard-Spock... and more!</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.3/socket.io.js"></script>
+</head>
+<body>
+    <h1>Rock-Paper-Scissors-Lizard-Spock... and more!</h1>
+    <p>Welcome, {{ username }}! You are in room: {{ room }}</p>
+    <div>
+        <!-- Dodaj przyciski dla wszystkich 15 wyborów -->
+        <button onclick="play('rock')">Rock</button>
+        <button onclick="play('fire')">Fire</button>
+        <button onclick="play('scissors')">Scissors</button>
+        <button onclick="play('snake')">Snake</button>
+        <button onclick="play('human')">Human</button>
+        <button onclick="play('tree')">Tree</button>
+        <button onclick="play('wolf')">Wolf</button>
+        <button onclick="play('sponge')">Sponge</button>
+        <button onclick="play('paper')">Paper</button>
+        <button onclick="play('air')">Air</button>
+        <button onclick="play('water')">Water</button>
+        <button onclick="play('dragon')">Dragon</button>
+        <button onclick="play('devil')">Devil</button>
+        <button onclick="play('lightning')">Lightning</button>
+        <button onclick="play('gun')">Gun</button>
+    </div>
+    <div id="result">
+        <p id="player1"></p>
+        <p id="player2"></p>
+        <p id="gameResult"></p>
+        <p id="score"></p> <!-- Nowe pole do wyświetlania bieżących punktów -->
+        <p id="finalResult"></p> <!-- Pole do wyświetlania końcowego wyniku -->
+    </div>
+
+    <script>
+        const socket = io();
+        const username = "{{ username }}";
+        const room = "{{ room }}";
+
+        socket.emit('join', {username: username, room: room});
+
+        function play(move) {
+            socket.emit('play', {username: username, move: move, room: room});
+        }
+
+        socket.on('message', function(data) {
+            console.log(data.msg);
+        });
+
+        socket.on('play', function(data) {
+            console.log(`${data.username} played ${data.move}`);
+        });
+
+        socket.on('result', function(data) {
+            console.log(data);  // Logowanie
+            const player1Text = `${data.player1} played ${data.move1}`;
+            const player2Text = `${data.player2} played ${data.move2}`;
+            const resultText = `Round result: ${data.result}`;
+            const scoreText = `Current score: ${data.player1} - ${data.score1}, ${data.player2} - ${data.score2}`;
+
+            document.getElementById('player1').innerText = player1Text;
+            document.getElementById('player2').innerText = player2Text;
+            document.getElementById('gameResult').innerText = resultText;
+            document.getElementById('score').innerText = scoreText;
+
+            if (data.game_over) {
+                document.getElementById('finalResult').innerText = `Final result: ${data.result}`;
+            } else {
+                document.getElementById('finalResult').innerText = '';  // Czyszczenie wyniku końcowego między rundami
+            }
+        });
+    </script>
+</body>
+</html>

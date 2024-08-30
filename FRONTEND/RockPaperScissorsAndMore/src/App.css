@@ -1,42 +1,94 @@
-#root {
+/* #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+} */
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* General CSS */
+
+.container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+
+
+.div-visible-flex {
+  display: flex !important;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.div-visible-no {
+  display: none !important;
 }
 
-.card {
-  padding: 2em;
+/* NavBar */
+
+.nav {
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: rgba(246, 246, 246, 0.833);
+
+  z-index: 100;
 }
 
-.read-the-docs {
-  color: #888;
+.nav h1 {
+  color: rgb(26, 19, 19);
 }
+
+.nav-list {
+  min-width: 180px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  list-style: none;
+}
+
+.nav-list li {
+  padding: 5px;
+  
+}
+
+.nav-list a {
+  border: 2px solid rgb(26, 19, 19);
+  border-radius: 5px;
+  /* transition: all 0.6s ease-out; */
+  text-decoration: none;
+  color: rgb(26, 19, 19);
+  font-size: 16px;
+  font-weight: bold;
+  margin-right: 10px;
+  box-shadow: 5px 5px 5px rgb(26, 19, 19);
+}
+
+.nav-list a:last-child {
+  margin-right: 0px;
+}
+
+
+.nav-list a:hover{
+  /* transform: scaleX(1.5); */
+  /* text-align: center; */
+  /* background-color: black; */
+  color: rgba(7, 154, 41, 0.833);
+  border: 2px solid rgba(7, 154, 41, 0.833);
+  box-shadow: 5px 5px 5px rgba(7, 154, 41, 0.833);
+}
+
+

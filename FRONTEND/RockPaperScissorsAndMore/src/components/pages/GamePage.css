@@ -1,0 +1,107 @@
+.container {
+    /* flex-direction: column; */
+    padding: 10px;
+}
+
+.game-display, .game-history, .game-options {
+    /* border: 3px solid rgba(237, 21, 21, 0.833); */
+    border-radius: 15px;
+    /* padding: 20px; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .game-display {
+    min-width: 800px;
+    max-height: 650px;
+    overflow-y: scroll;
+  }
+
+  .game-history {
+    margin-right: 10px;
+    min-width: 200px;
+    min-height: 600px;
+  }
+
+  .game-options {
+    margin-left: 10px;
+    min-width: 250px;
+    min-height: 600px;
+    padding: 20px;
+  }
+
+.moves-picker, .rounds-counter{
+    /* border: 3px solid rgba(246, 246, 246, 0.833); */
+    border-radius: 15px;
+    min-height: 500px;
+    min-width: 680px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+.moves-picker {
+  justify-content: space-around;
+  flex-wrap: wrap;
+  flex-direction: row;
+  }
+
+.rounds-counter {
+    min-height: 50px;
+    min-width: 680px;
+    flex-direction: row;
+    justify-content: center;
+    
+}
+
+.game-options {
+    text-align: center;
+}
+
+.move {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    /* border: 2px solid rgb(223, 255, 13); */
+    margin: 5px 20px;
+}
+
+.move input {
+    display: none;
+}
+
+.attack-btn {
+    background: linear-gradient(98.3deg, rgb(0, 0, 0) 10.6%, rgb(0, 255, 0) 97.7%); 
+    border: 1px solid green;
+    outline: none;
+    color: rgba(246, 246, 246, 0.833);
+    padding: 10px;
+    width: 150px;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: 900;
+}
+
+.attack-btn:hover {
+  box-shadow: 5px 5px 5px green;
+
+}
+
+.span-player-move h3, .span-player-move h4 {
+    margin-bottom: 10px;
+}
+
+.disabled{
+  background: linear-gradient(98.3deg, rgb(0, 0, 0) 10.6%, rgb(255, 0, 0) 97.7%); 
+  border: 1px solid red;
+  pointer-events: none;
+  background-color: gray;
+
+  /* display: none; */
+}
