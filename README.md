@@ -27,3 +27,7 @@ Celem projektu było stworzenie przeglądarkowej wersji gry Papier, Kamień, No�
 
 ##### Próba dołączenia do nieistniejącego pokoju
 ![](./screenshots/2.png)
+
+### Autorzy:
+Frontend: [Grzegorz Bąk](https://github.com/altGreG)<br>
+Backend: [Dorian Sraga](https://github.com/Domicjan)
